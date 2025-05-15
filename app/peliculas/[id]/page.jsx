@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useParams } from 'next/navigation';
-import Link from 'next/link';
-import moviesMock from '../../../data/moviesMock';
+import { useParams } from "next/navigation";
+import Link from "next/link";
+import moviesMock from "../../../data/moviesMock";
 
 export default function MovieDetailPage() {
   const params = useParams();
@@ -30,7 +30,6 @@ export default function MovieDetailPage() {
       >
         ← Volver al listado
       </Link>
-
     </main>
   );
 }
