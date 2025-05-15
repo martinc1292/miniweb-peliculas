@@ -1,43 +1,50 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
+import Link from "next/link";
 
 export default function MovieCard({ movie }) {
-  const [like, setLike] = useState(false);
-  const [dislike, setDislike] = useState(false);
-
-  const handleLike = () => {
-    setLike(!like);
-    if (!like && dislike) setDislike(false);
+  const [like, setLike] = useState(null);
+  const handleLike = (type) => {
+    setLike((prev) => (prev === type ? null : type));
   };
-
-  const handleDislike = () => {
-    setDislike(!dislike);
-    if (!dislike && like) setLike(false);
-  };
-
+  const borderColor =
+    like === "like"
+      ? "border-green-500"
+      : like === "dislike"
+      ? "border-red-500"
+      : "border-gray-500";
   return (
-    <div className="bg-slate-900 p-4 rounded shadow text-center text-sm">
-      <img
-        src={movie.poster}
-        alt={movie.title}
-        className="w-full h-[150px] object-cover rounded mb-2"
-      />
-      <h2 className="font-semibold">{movie.title}</h2>
-      <p className="text-gray-500">{movie.year}</p>
-      <div className="flex justify-center gap-2 mt-2">
+    <div
+      className={`border-4 ${borderColor} bg-gray-700 p-4 rounded shadow text-center text-sm space-y-2 text-white transition`}
+    >
+      {/* Sólo el contenido del link */}
+      <Link href={`/peliculas/${movie._id}`}>
+        <div className="cursor-pointer">
+          <img
+            src={movie.poster}
+            alt={movie.title}
+            className="w-full h-[150px] object-cover rounded mb-2"
+          />
+          <h2 className="font-semibold">{movie.title}</h2>
+          <p className="text-gray-300">{movie.year}</p>
+        </div>
+      </Link>
+
+      {/* Botones por fuera del link */}
+      <div className="flex justify-center gap-4 mt-2">
         <button
-          onClick={handleLike}
-          className={`px-2 py-1 text-xs rounded ${
-            like ? 'bg-green-500 text-white' : 'bg-gray-200'
+          onClick={() => handleLike("like")}
+          className={`text-2xl transition ${
+            like === "like" ? "text-green-400 scale-150" : "text-gray-400"
           }`}
         >
           👍
         </button>
         <button
-          onClick={handleDislike}
-          className={`px-2 py-1 text-xs rounded ${
-            dislike ? 'bg-red-500 text-white' : 'bg-gray-200'
+          onClick={() => handleLike("dislike")}
+          className={`text-2xl transition ${
+            like === "dislike" ? "text-red-400 scale-150" : "text-gray-400"
           }`}
         >
           👎
